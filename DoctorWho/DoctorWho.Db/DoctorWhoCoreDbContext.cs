@@ -11,7 +11,7 @@ namespace DoctorWho.Db
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
-
+        public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-2628EB6;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;Initial Catalog=DoctorWhoCore");
@@ -121,6 +121,8 @@ namespace DoctorWho.Db
             };
             modelBuilder.Entity<EpisodeEnemy>().HasData(episodeEnemiesList);
 
+
+            modelBuilder.Entity<ViewEpisodes>().HasNoKey().ToView("ViewEpisodes");
         }
     }
 }
