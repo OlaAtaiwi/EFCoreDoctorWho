@@ -8,8 +8,8 @@ namespace DoctorWho.Db
 {
     public class ViewEpisodes
     {
-        public string Author_Name { get; set; }
-        public string Doctor_Name { get; set; }
+        public string AuthorName { get; set; }
+        public string DoctorName { get; set; }
         public string Companions { get; set; }
         public string Enemies { get; set; }
     }
