@@ -3,7 +3,7 @@ namespace DoctorWho.Db.Repositories
 {
     public class EpisodeRepository
     {
-       public static void CreateEpisode(int seriesNumber, int episodeNumber, string episodeType, string title, int authorId, int doctorId, DateTime date)
+        public static void CreateEpisode(int seriesNumber, int episodeNumber, string episodeType, string title, int authorId, int doctorId, DateTime date)
         {
             var episode = new Episode
             {

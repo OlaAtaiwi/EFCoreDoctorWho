@@ -6,7 +6,7 @@ namespace DoctorWho.Db
     {
         public Companion()
         {
-            EpisodeCompanions= new List<EpisodeCompanion>();
+            EpisodeCompanions = new List<EpisodeCompanion>();
         }
         public int CompanionId { get; set; }
         public string CompanionName { get; set; }

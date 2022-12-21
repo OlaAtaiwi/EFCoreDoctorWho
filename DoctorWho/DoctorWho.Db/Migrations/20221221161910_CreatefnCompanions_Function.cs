@@ -8,7 +8,7 @@ namespace DoctorWho.Db.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-          
+
             migrationBuilder.Sql(@"CREATE OR ALTER FUNCTION fnCompanions(@EpisodeId INT)
                 RETURNS VARCHAR(MAX) AS
                 BEGIN
@@ -22,7 +22,7 @@ namespace DoctorWho.Db.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+
             migrationBuilder.Sql(@"DROP FUNCTION fnCompanions");
 
         }

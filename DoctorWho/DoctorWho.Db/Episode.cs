@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DoctorWho.Db
+﻿namespace DoctorWho.Db
 {
     public class Episode
     {
         public Episode()
         {
             EpisodeCompanions = new List<EpisodeCompanion>();
-            EpisodeEnemies= new List<EpisodeEnemy> ();
+            EpisodeEnemies = new List<EpisodeEnemy>();
         }
         public int EpisodeId { get; set; }
         public int SeriesNumber { get; set; }

@@ -13,6 +13,7 @@ namespace DoctorWho.Db.Repositories
                 Console.WriteLine("Doctor Created");
             }
         }
+
         public static void DeleteDoctor(string doctorName)
         {
             if (doctorName != null)
@@ -26,10 +27,16 @@ namespace DoctorWho.Db.Repositories
                 }
             }
         }
+
         public static void UpdateDoctor(Doctor doctor)
         {
             DoctorWhoCoreDbContext._context.Doctors.Update(doctor);
             DoctorWhoCoreDbContext._context.SaveChanges();
+        }
+
+        List<Doctor> GetAllDoctors()
+        {
+            return DoctorWhoCoreDbContext._context.Doctors.ToList();
         }
     }
 }

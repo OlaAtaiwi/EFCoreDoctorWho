@@ -13,6 +13,7 @@ namespace DoctorWho.Db.Repositories
                 Console.WriteLine("Enemy Created");
             }
         }
+
         public static void DeleteEnemy(string enemyName)
         {
             var enemy = DoctorWhoCoreDbContext._context.Enemies.Where(e => e.EnemyName == enemyName).FirstOrDefault();
@@ -23,10 +24,21 @@ namespace DoctorWho.Db.Repositories
                 Console.WriteLine("Enemy Deleted");
             }
         }
+
         public static void UpdateEnemy(Enemy enemy)
         {
             DoctorWhoCoreDbContext._context.Enemies.Update(enemy);
             DoctorWhoCoreDbContext._context.SaveChanges();
+        }
+
+        Enemy GetEnemyById(int id)
+        {
+            var enemy = DoctorWhoCoreDbContext._context.Enemies.Find(id);
+            if (enemy != null)
+            {
+                return enemy;
+            }
+            throw new NullReferenceException("No enemies with the provided Id !");
         }
     }
 }
