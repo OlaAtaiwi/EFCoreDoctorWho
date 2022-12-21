@@ -24,3 +24,28 @@ void AddEnemyToEpisode(int episodeId, int enemyId)
         DoctorWhoCoreDbContext._context.SaveChanges();
     }
 }
+
+List<Doctor> GetAllDoctors()
+{
+   return DoctorWhoCoreDbContext._context.Doctors.ToList();
+}
+
+Enemy GetEnemyById(int id)
+{
+    var enemy= DoctorWhoCoreDbContext._context.Enemies.Find(id);
+    if(enemy!=null)
+    {
+        return enemy;
+    }
+    throw new NullReferenceException("No enemies with the provided Id !");
+}
+
+Companion GetCompanionById(int id)
+{
+    var companion = DoctorWhoCoreDbContext._context.Companions.Find(id);
+    if(companion!=null)
+    {
+        return companion;
+    }
+    throw new NullReferenceException("No companions with the provided Id !");
+}
