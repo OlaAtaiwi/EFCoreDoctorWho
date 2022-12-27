@@ -3,13 +3,18 @@ namespace DoctorWho.Db.Repositories
 {
     public class EpisodeCompanionRepository
     {
-        public static void AddCompanionToEpisode(int episodeId, int companionId)
+        private DoctorWhoCoreDbContext _context;
+        public EpisodeCompanionRepository(DoctorWhoCoreDbContext context)
         {
-            var episode = DoctorWhoCoreDbContext._context.Episodes.Find(episodeId);
+            _context = context;
+        }
+        public void AddCompanionToEpisode(int episodeId, int companionId)
+        {
+            var episode = _context.Episodes.Find(episodeId);
             if (episode != null)
             {
                 episode.EpisodeCompanions.Add(new EpisodeCompanion { CompanionId = companionId, EpisodeId = episodeId });
-                DoctorWhoCoreDbContext._context.SaveChanges();
+                _context.SaveChanges();
             }
         }
     }

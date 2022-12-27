@@ -3,37 +3,42 @@ namespace DoctorWho.Db.Repositories
 {
     public class EnemyRepository
     {
-        public static void CreateEnemy(string enemyName)
+        private DoctorWhoCoreDbContext _context;
+        public EnemyRepository(DoctorWhoCoreDbContext context)
         {
-            if (enemyName != null)
+            _context = context;
+        }
+        public void CreateEnemy(string enemyName)
+        {
+            if (!string.IsNullOrEmpty(enemyName))
             {
                 var enemy = new Enemy { EnemyName = enemyName };
-                DoctorWhoCoreDbContext._context.Enemies.Add(enemy);
-                DoctorWhoCoreDbContext._context.SaveChanges();
+                _context.Enemies.Add(enemy);
+                _context.SaveChanges();
                 Console.WriteLine("Enemy Created");
             }
         }
 
-        public static void DeleteEnemy(string enemyName)
+        public void DeleteEnemy(string enemyName)
         {
-            var enemy = DoctorWhoCoreDbContext._context.Enemies.Where(e => e.EnemyName == enemyName).FirstOrDefault();
+            var enemy = _context.Enemies.Where(e => e.EnemyName == enemyName).FirstOrDefault();
             if (enemy != null)
             {
-                DoctorWhoCoreDbContext._context.Enemies.Remove(enemy);
-                DoctorWhoCoreDbContext._context.SaveChanges();
+                _context.Enemies.Remove(enemy);
+                _context.SaveChanges();
                 Console.WriteLine("Enemy Deleted");
             }
         }
 
-        public static void UpdateEnemy(Enemy enemy)
+        public void UpdateEnemy(Enemy enemy)
         {
-            DoctorWhoCoreDbContext._context.Enemies.Update(enemy);
-            DoctorWhoCoreDbContext._context.SaveChanges();
+            _context.Enemies.Update(enemy);
+            _context.SaveChanges();
         }
 
         Enemy GetEnemyById(int id)
         {
-            var enemy = DoctorWhoCoreDbContext._context.Enemies.Find(id);
+            var enemy = _context.Enemies.Find(id);
             if (enemy != null)
             {
                 return enemy;

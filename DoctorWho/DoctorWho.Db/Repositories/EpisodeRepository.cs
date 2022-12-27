@@ -3,37 +3,32 @@ namespace DoctorWho.Db.Repositories
 {
     public class EpisodeRepository
     {
-        public static void CreateEpisode(int seriesNumber, int episodeNumber, string episodeType, string title, int authorId, int doctorId, DateTime date)
+        private DoctorWhoCoreDbContext _context;
+        public EpisodeRepository(DoctorWhoCoreDbContext context)
         {
-            var episode = new Episode
-            {
-                SeriesNumber = seriesNumber,
-                EpisodeNumber = episodeNumber,
-                EpisodeType = episodeType,
-                Title = title,
-                AuthorId = authorId,
-                DoctorId = doctorId,
-                EpisodeDate = date,
-            };
-            DoctorWhoCoreDbContext._context.Episodes.Add(episode);
-            DoctorWhoCoreDbContext._context.SaveChanges();
+            _context = context;
+        }
+        public void CreateEpisode(Episode episode)
+        {
+            _context.Episodes.Add(episode);
+            _context.SaveChanges();
             Console.WriteLine("Episode Created");
         }
 
-        public static void DeleteEpisode(int episodeNumber, string episodeTitle)
+        public void DeleteEpisode(int episodeNumber, string episodeTitle)
         {
-            var episode = DoctorWhoCoreDbContext._context.Episodes.Where(e => e.EpisodeNumber == episodeNumber && e.Title == episodeTitle).FirstOrDefault();
+            var episode = _context.Episodes.Where(e => e.EpisodeNumber == episodeNumber && e.Title == episodeTitle).FirstOrDefault();
             if (episode != null)
             {
-                DoctorWhoCoreDbContext._context.Episodes.Remove(episode);
-                DoctorWhoCoreDbContext._context.SaveChanges();
+                _context.Episodes.Remove(episode);
+                _context.SaveChanges();
                 Console.WriteLine("Episode Deleted");
             }
         }
-        public static void UpdateEpisode(Episode episode)
+        public void UpdateEpisode(Episode episode)
         {
-            DoctorWhoCoreDbContext._context.Episodes.Update(episode);
-            DoctorWhoCoreDbContext._context.SaveChanges();
+            _context.Episodes.Update(episode);
+            _context.SaveChanges();
         }
     }
 }

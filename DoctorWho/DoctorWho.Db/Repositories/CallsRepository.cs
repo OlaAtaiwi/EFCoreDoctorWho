@@ -3,9 +3,14 @@ namespace DoctorWho.Db.Repositories
 {
     public class CallsRepository
     {
-        public static void CallViewEpisodesView()
+        private DoctorWhoCoreDbContext _context;
+        public CallsRepository(DoctorWhoCoreDbContext context)
         {
-            var episodes = DoctorWhoCoreDbContext._context.ViewEpisodes.ToList();
+            _context = context;
+        }
+        public void CallViewEpisodesView()
+        {
+            var episodes = _context.ViewEpisodes.ToList();
 
             Console.WriteLine(String.Format("{0, 5}|{1, 5}|{2, 5}|{3, 5}",
                     "Doctor_Name", "Author_Name", "Companions", "Enemies"));
@@ -15,14 +20,14 @@ namespace DoctorWho.Db.Repositories
                    epesode.DoctorName, epesode.AuthorName, epesode.Companions, epesode.Enemies));
             }
         }
-        public static void CallfnCompanionsFunction(int id)
+        public void CallfnCompanionsFunction(int id)
         {
-            var companions = DoctorWhoCoreDbContext._context.Companions.Select(c => DoctorWhoCoreDbContext._context.CallFnCompanions(id)).FirstOrDefault();
+            var companions = _context.Companions.Select(c =>_context.CallFnCompanions(id)).FirstOrDefault();
             Console.WriteLine(companions);
         }
-        public static void CallfnEnemiesFunction(int id)
+        public void CallfnEnemiesFunction(int id)
         {
-            var enemies = DoctorWhoCoreDbContext._context.Enemies.Select(e => DoctorWhoCoreDbContext._context.CallFnEnemies(id)).FirstOrDefault();
+            var enemies =_context.Enemies.Select(e =>_context.CallFnEnemies(id)).FirstOrDefault();
             Console.WriteLine(enemies);
         }
     }

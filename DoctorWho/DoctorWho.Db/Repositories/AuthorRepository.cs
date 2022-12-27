@@ -3,33 +3,38 @@ namespace DoctorWho.Db.Repositories
 {
     public class AuthorRepository
     {
-        public static void CreateAuthor(string AuthorName)
+        private DoctorWhoCoreDbContext _context;
+        public AuthorRepository(DoctorWhoCoreDbContext context)
         {
-            if (AuthorName != null)
+                _context=context;
+        }
+        public  void CreateAuthor(string authorName)
+        {
+            if (!string.IsNullOrEmpty(authorName))
             {
-                var author = new Author { AuthorName = AuthorName };
-                DoctorWhoCoreDbContext._context.Authors.Add(author);
-                DoctorWhoCoreDbContext._context.SaveChanges();
-                Console.WriteLine($"Author {AuthorName} Created");
+                var author = new Author { AuthorName = authorName };
+                _context.Authors.Add(author);
+                _context.SaveChanges();
+                Console.WriteLine($"Author {authorName} Created");
             }
         }
-        public static void DeleteAuthor(string AuthorName)
+        public void DeleteAuthor(string authorName)
         {
-            if (AuthorName != null)
+            if (!string.IsNullOrEmpty(authorName))
             {
-                var author = DoctorWhoCoreDbContext._context.Authors.Where(a => a.AuthorName == AuthorName).FirstOrDefault();
+                var author =_context.Authors.Where(a => a.AuthorName == authorName).FirstOrDefault();
                 if (author != null)
                 {
-                    DoctorWhoCoreDbContext._context.Authors.Remove(author);
-                    DoctorWhoCoreDbContext._context.SaveChanges();
-                    Console.WriteLine($"Author {AuthorName} Deleted");
+                    _context.Authors.Remove(author);
+                    _context.SaveChanges();
+                    Console.WriteLine($"Author {authorName} Deleted");
                 }
             }
         }
-        public static void UpdateAuthor(Author auth)
+        public void UpdateAuthor(Author auth)
         {
-            DoctorWhoCoreDbContext._context.Authors.Update(auth);
-            DoctorWhoCoreDbContext._context.SaveChanges();
+           _context.Authors.Update(auth);
+           _context.SaveChanges();
         }
     }
 }

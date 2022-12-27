@@ -4,7 +4,6 @@ namespace DoctorWho.Db
 {
     public class DoctorWhoCoreDbContext : DbContext
     {
-        public static DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
         public DbSet<Author> Authors { get; set; }
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
