@@ -8,10 +8,10 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CallViewEpisodesView()
+        public void ViewEpisodes()
         {
             var episodes = _context.ViewEpisodes.ToList();
-
+            
             Console.WriteLine(String.Format("{0, 5}|{1, 5}|{2, 5}|{3, 5}",
                     "Doctor_Name", "Author_Name", "Companions", "Enemies"));
             foreach (var epesode in episodes)
@@ -20,15 +20,15 @@ namespace DoctorWho.Db.Repositories
                    epesode.DoctorName, epesode.AuthorName, epesode.Companions, epesode.Enemies));
             }
         }
-        public void CallfnCompanionsFunction(int id)
+        public string CompanionsForEpisode(int id)
         {
             var companions = _context.Companions.Select(c =>_context.CallFnCompanions(id)).FirstOrDefault();
-            Console.WriteLine(companions);
+            return companions;
         }
-        public void CallfnEnemiesFunction(int id)
+        public string EnemiesForEpisode(int id)
         {
             var enemies =_context.Enemies.Select(e =>_context.CallFnEnemies(id)).FirstOrDefault();
-            Console.WriteLine(enemies);
+            return enemies;
         }
     }
 }
