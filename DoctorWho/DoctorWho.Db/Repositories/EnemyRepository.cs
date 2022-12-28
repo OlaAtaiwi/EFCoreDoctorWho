@@ -8,37 +8,35 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CreateEnemy(string enemyName)
+        public async Task CreateEnemyAsync(string enemyName)
         {
             if (!string.IsNullOrEmpty(enemyName))
             {
                 var enemy = new Enemy { EnemyName = enemyName };
                 _context.Enemies.Add(enemy);
-                _context.SaveChanges();
-                Console.WriteLine("Enemy Created");
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void DeleteEnemy(string enemyName)
+        public async Task DeleteEnemyAsync(string enemyName)
         {
             var enemy = _context.Enemies.Where(e => e.EnemyName == enemyName).FirstOrDefault();
             if (enemy != null)
             {
                 _context.Enemies.Remove(enemy);
-                _context.SaveChanges();
-                Console.WriteLine("Enemy Deleted");
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void UpdateEnemy(Enemy enemy)
+        public async Task UpdateEnemyAsync(Enemy enemy)
         {
             _context.Enemies.Update(enemy);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        Enemy GetEnemyById(int id)
+        public async Task<Enemy> GetEnemyByIdAsync(int id)
         {
-            var enemy = _context.Enemies.Find(id);
+            var enemy = await _context.Enemies.FindAsync(id);
             if (enemy != null)
             {
                 return enemy;

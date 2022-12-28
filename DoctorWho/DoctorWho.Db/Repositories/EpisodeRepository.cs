@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace DoctorWho.Db.Repositories
 {
     public class EpisodeRepository
@@ -8,27 +10,32 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CreateEpisode(Episode episode)
+        public async Task CreateEpisodeAsync(Episode episode)
         {
             _context.Episodes.Add(episode);
-            _context.SaveChanges();
-            Console.WriteLine("Episode Created");
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteEpisode(int episodeNumber, string episodeTitle)
+        public async Task DeleteEpisodeAsync(int episodeNumber, string episodeTitle)
         {
-            var episode = _context.Episodes.Where(e => e.EpisodeNumber == episodeNumber && e.Title == episodeTitle).FirstOrDefault();
+            var episode = await _context.Episodes.Where(e => e.EpisodeNumber == episodeNumber && e.Title == episodeTitle).FirstOrDefaultAsync();
             if (episode != null)
             {
                 _context.Episodes.Remove(episode);
-                _context.SaveChanges();
-                Console.WriteLine("Episode Deleted");
+                await _context.SaveChangesAsync();
             }
         }
-        public void UpdateEpisode(Episode episode)
+
+        public async Task UpdateEpisodeAsync(Episode episode)
         {
             _context.Episodes.Update(episode);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<ViewEpisodes>> ViewEpisodesAsync()
+        {
+            var episodes = await _context.ViewEpisodes.ToListAsync();
+            return episodes;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace DoctorWho.Db.Repositories
 {
     public class EpisodeEnemyRepository
@@ -8,14 +10,20 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void AddEnemyToEpisode(int episodeId, int enemyId)
+        public async Task AddEnemyToEpisodeAsync(int episodeId, int enemyId)
         {
-            var episode = _context.Episodes.Find(episodeId);
+            var episode = await _context.Episodes.FindAsync(episodeId);
             if (episode != null)
             {
                 episode.EpisodeEnemies.Add(new EpisodeEnemy { EnemyId = enemyId, EpisodeId = episodeId });
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<string> GetEnemiesForEpisodeAsync(int id)
+        {
+            var enemies = await _context.Enemies.Select(e => _context.CallFnEnemies(id)).FirstOrDefaultAsync();
+            return enemies;
         }
     }
 }

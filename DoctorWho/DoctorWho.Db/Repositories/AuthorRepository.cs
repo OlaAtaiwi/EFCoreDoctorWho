@@ -8,17 +8,16 @@ namespace DoctorWho.Db.Repositories
         {
                 _context=context;
         }
-        public  void CreateAuthor(string authorName)
+        public async Task CreateAuthorAsync(string authorName)
         {
             if (!string.IsNullOrEmpty(authorName))
             {
                 var author = new Author { AuthorName = authorName };
                 _context.Authors.Add(author);
-                _context.SaveChanges();
-                Console.WriteLine($"Author {authorName} Created");
+                await _context.SaveChangesAsync();
             }
         }
-        public void DeleteAuthor(string authorName)
+        public async Task DeleteAuthorAsync(string authorName)
         {
             if (!string.IsNullOrEmpty(authorName))
             {
@@ -26,15 +25,14 @@ namespace DoctorWho.Db.Repositories
                 if (author != null)
                 {
                     _context.Authors.Remove(author);
-                    _context.SaveChanges();
-                    Console.WriteLine($"Author {authorName} Deleted");
+                    await _context.SaveChangesAsync();
                 }
             }
         }
-        public void UpdateAuthor(Author auth)
+        public async Task UpdateAuthorAsync(Author auth)
         {
            _context.Authors.Update(auth);
-           _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

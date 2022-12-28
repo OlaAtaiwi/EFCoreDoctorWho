@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace DoctorWho.Db.Repositories
 {
     public class EpisodeCompanionRepository
@@ -8,14 +10,21 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void AddCompanionToEpisode(int episodeId, int companionId)
+
+        public async Task AddCompanionToEpisodeAsync(int episodeId, int companionId)
         {
-            var episode = _context.Episodes.Find(episodeId);
+            var episode =await _context.Episodes.FindAsync(episodeId);
             if (episode != null)
             {
                 episode.EpisodeCompanions.Add(new EpisodeCompanion { CompanionId = companionId, EpisodeId = episodeId });
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<string> GetCompanionsForEpisodeAsync(int id)
+        {
+            var companions = await _context.Companions.Select(c => _context.CallFnCompanions(id)).FirstOrDefaultAsync();
+            return companions;
         }
     }
 }

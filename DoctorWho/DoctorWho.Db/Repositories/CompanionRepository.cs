@@ -8,37 +8,36 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CreateCompanion(string companionName, string whoPlayed)
+        public async Task CreateCompanionAsync(string companionName, string whoPlayed)
         {
             if (!string.IsNullOrEmpty(companionName))
             {
                 var companion = new Companion { CompanionName = companionName, WhoPlayed = whoPlayed };
                 _context.Companions.Add(companion);
-                _context.SaveChanges();
-                Console.WriteLine("Companion Created");
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void DeleteCompanion(string companionName)
+        public async Task DeleteCompanionAsync(string companionName)
         {
             var companion =_context.Companions.Where(c => c.CompanionName == companionName).FirstOrDefault();
             if (companion != null)
             {
                 _context.Companions.Remove(companion);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 Console.WriteLine("Companion Deleted");
             }
         }
 
-        public void UpdateCompanion(Companion companion)
+        public async Task UpdateCompanionAsync(Companion companion)
         {
             _context.Companions.Update(companion);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        Companion GetCompanionById(int id)
+        async Task<Companion> GetCompanionByIdAsync(int id)
         {
-            var companion = _context.Companions.Find(id);
+            var companion =await  _context.Companions.FindAsync(id);
             if (companion != null)
             {
                 return companion;

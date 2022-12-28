@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace DoctorWho.Db.Repositories
 {
     public class DoctorRepository
@@ -8,18 +10,17 @@ namespace DoctorWho.Db.Repositories
         {
             _context = context;
         }
-        public void CreateDoctor(string doctorName, int doctorNumber)
+        public async Task CreateDoctorAsync(string doctorName, int doctorNumber)
         {
             if (!string.IsNullOrEmpty(doctorName))
             {
                 var doctor = new Doctor { DoctorName = doctorName, DoctorNumber = doctorNumber };
                 _context.Doctors.Add(doctor);
-                _context.SaveChanges();
-                Console.WriteLine("Doctor Created");
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void DeleteDoctor(string doctorName)
+        public async Task DeleteDoctorAsync(string doctorName)
         {
             if (!string.IsNullOrEmpty(doctorName))
             {
@@ -27,21 +28,20 @@ namespace DoctorWho.Db.Repositories
                 if (doctor != null)
                 {
                     _context.Doctors.Remove(doctor);
-                    _context.SaveChanges();
-                    Console.WriteLine("Doctor Deleted");
+                    await _context.SaveChangesAsync();
                 }
             }
         }
 
-        public void UpdateDoctor(Doctor doctor)
+        public async Task UpdateDoctorAsync(Doctor doctor)
         {
             _context.Doctors.Update(doctor);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        List<Doctor> GetAllDoctors()
+        public async Task<List<Doctor>> GetAllDoctorsAsync()
         {
-            return _context.Doctors.ToList();
+            return await _context.Doctors.ToListAsync(); 
         }
     }
 }
